@@ -1,30 +1,45 @@
--- Parkplätze
-CREATE TABLE parking_slots (
-    id SERIAL PRIMARY KEY,
-    slot_name VARCHAR(10) UNIQUE NOT NULL,
-    status VARCHAR(10) NOT NULL DEFAULT 'frei'
+CREATE TABLE motion_Sensor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id VARCHAR(50),
+    device_name VARCHAR(100),
+    data_time DATETIME,
+    value BOOLEAN
 );
 
--- Historie
-CREATE TABLE parking_history (
-    id SERIAL PRIMARY KEY,
-    slot_id INT REFERENCES parking_slots(id) ON DELETE CASCADE,
-    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    end_time TIMESTAMP,
-    duration INTERVAL
+CREATE TABLE distance_Sensor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id VARCHAR(50),
+    device_name VARCHAR(100),
+    data_time DATETIME,
+    value FLOAT
 );
 
--- Reservierungen
-CREATE TABLE reservations (
-    id SERIAL PRIMARY KEY,
-    slot_id INT REFERENCES parking_slots(id) ON DELETE CASCADE,
-    reserved_from TIMESTAMP NOT NULL,
-    reserved_until TIMESTAMP NOT NULL,
-    reserved_by VARCHAR(50)
+CREATE TABLE rf_id (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id VARCHAR(50),
+    device_name VARCHAR(100),
+    data_time DATETIME,
+    value TEXT
 );
 
--- Startdaten für 3 Plätze
-INSERT INTO parking_slots (slot_name, status) VALUES
-('P1', 'frei'),
-('P2', 'frei'),
-('P3', 'frei');
+CREATE TABLE light (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id VARCHAR(50),
+    device_name VARCHAR(100),
+    data_time DATETIME,
+    value TEXT
+);
+
+CREATE TABLE get_sensor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id VARCHAR(50),
+    device_name VARCHAR(100),
+    data_time DATETIME,
+    value BOOLEAN
+);
+
+CREATE TABLE parking (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    place_name VARCHAR(100),
+    status VARCHAR(50)
+);
