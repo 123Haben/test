@@ -4,17 +4,15 @@ CREATE TABLE parking (
     status ENUM('free', 'occupied', 'reserved') DEFAULT 'free'
 );
 
-CREATE TABLE car (
+CREATE TABLE owner (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    plate_number VARCHAR(20),
-    owner_name VARCHAR(100),
-    rf_id_tag VARCHAR(100) UNIQUE
+   rf_id_tag VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE device (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
-    type ENUM('motion', 'rfid', 'light', 'distance', 'get'),
+    type ENUM('motion', 'rfid', 'light', 'distance', 'gate'),
     parking_id INT,
     FOREIGN KEY (parking_id) REFERENCES parking(id)
 );
@@ -22,7 +20,7 @@ CREATE TABLE device (
 CREATE TABLE motion_sensor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     device_id INT,
-    data_time DATETIME,
+    last_use DATETIME,
     value BOOLEAN,
     FOREIGN KEY (device_id) REFERENCES device(id)
 );
@@ -30,9 +28,10 @@ CREATE TABLE motion_sensor (
 CREATE TABLE rf_id (
     id INT PRIMARY KEY AUTO_INCREMENT,
     device_id INT,
-    data_time DATETIME,
+    last_use DATETIME,
     value VARCHAR(100), -- RFID-Tag erkannt
     FOREIGN KEY (device_id) REFERENCES device(id)
+    FOREIGN KEY (rf_id_tag) REFERENCES owner(rf_id_tag)
 );
 
 CREATE TABLE reservation (
@@ -54,10 +53,10 @@ CREATE TABLE light (
     FOREIGN KEY (device_id) REFERENCES device(id)
 );
 
-CREATE TABLE get_sensor (
+CREATE TABLE gate_sensor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     device_id INT,
-    data_time DATETIME,
+    last_use DATETIME,
     value BOOLEAN,
     FOREIGN KEY (device_id) REFERENCES device(id)
 );
