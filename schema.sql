@@ -6,7 +6,7 @@ CREATE TABLE parking (
 
 CREATE TABLE owner (
     id INT PRIMARY KEY AUTO_INCREMENT,
-   rf_id_tag VARCHAR(100) UNIQUE
+    rf_id_tag VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE device (
